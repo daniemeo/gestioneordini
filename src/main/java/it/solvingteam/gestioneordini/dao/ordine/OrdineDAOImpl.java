@@ -1,9 +1,12 @@
 package it.solvingteam.gestioneordini.dao.ordine;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
+import it.solvingteam.gestioneordini.model.articolo.Articolo;
 import it.solvingteam.gestioneordini.model.ordine.Ordine;
 
 public class OrdineDAOImpl implements OrdineDAO {
@@ -17,8 +20,8 @@ public class OrdineDAOImpl implements OrdineDAO {
 	}
 	
 	@Override
-	public List<Ordine> list() throws Exception {
-		return entityManager.createQuery("from Ordine",Ordine.class).getResultList();
+	public Set<Ordine> list() throws Exception {
+		return entityManager.createQuery("from Ordine",Ordine.class).getResultList().stream().collect(Collectors.toSet());
 	}
 
 	@Override
@@ -53,6 +56,27 @@ public class OrdineDAOImpl implements OrdineDAO {
 		entityManager.remove(entityManager.merge(ordineInstace));
 		
 	}
+    
+    @Override
+    
+	public void addArticolo(Ordine ordineEsistente, Articolo articoloEsistente) throws Exception {
+	articoloEsistente.setOrdine(ordineEsistente);
+	}
+    
+    @Override
+    
+   	public void removeArticolo(Ordine ordineEsistente, Articolo articoloEsistente) throws Exception {
+   	articoloEsistente.setOrdine(null);
+   	}
+    
+    @Override
+    public void cercaOrdiniPerCategoria(String descrizioneCategoria) throws Exception {
+    	TypedQuery<Ordine> query = entityManager.createQuery("select a.ordine from Articolo a join a.categorie c where a.ordine is not null and c.descrizione like ?1", Ordine.class);
+		 query.setParameter(1, descrizioneCategoria);
+		 Set<Ordine> ordine= query.getResultList().stream().collect(Collectors.toSet());
+		 System.out.println("gli ordini per questa categoria sono: " + descrizioneCategoria + ordine);
+    }
+
 
 	
 

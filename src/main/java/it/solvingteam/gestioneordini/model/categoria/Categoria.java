@@ -26,6 +26,12 @@ public class Categoria {
 	@ManyToMany(mappedBy = "categorie")
 	private Set<Articolo> articoli = new HashSet<>(0);
 	
+	public Categoria() {}
+	
+	public Categoria(String descrizione) {
+		this.descrizione = descrizione;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -45,6 +51,19 @@ public class Categoria {
 		this.articoli = articoli;
 	}
 	
-	
-
+	@Override
+	public String toString() {
+		return "Categoria [id=" + id + ", descrizione=" + descrizione + "]";
+	}
+	@Override 
+	public boolean equals(Object object) {
+		if(object instanceof Categoria ) {
+			Categoria categoria = (Categoria) object;
+			return descrizione.equals(categoria.getDescrizione());
+			
+		}
+		else {
+			return this.equals(object);
+		}
+	}
 }

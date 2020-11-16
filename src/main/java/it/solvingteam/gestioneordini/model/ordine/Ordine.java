@@ -35,10 +35,11 @@ public class Ordine {
 	public Ordine() {
 	}
 
-	public Ordine(String nomeDestinatario, String indirizzoSpedizione) {
+	public Ordine(String nomeDestinatario, String indirizzoSpedizione ) {
 		super();
 		this.nomeDestinatario = nomeDestinatario;
 		this.indirizzoSpedizione = indirizzoSpedizione;
+	
 	}
 
 	public Long getId() {
@@ -77,7 +78,18 @@ public class Ordine {
 	public String toString() {
 		return "Ordine [id=" + id + ", nomeDestinatario=" + nomeDestinatario + ", indirizzoSpedizione=" + indirizzoSpedizione + ", articoli:" + articoli.size() + "]";
 	}
-	
+	/*
+	@Override 
+	public boolean equals(Object object) {
+		if(object instanceof Ordine ) {
+			Ordine ordine = (Ordine) object;
+			return articoli.equals(ordine.getArticoli());
+			
+		}
+		else {
+			return this.equals(object);
+		}
+	}*/
 
 
 }

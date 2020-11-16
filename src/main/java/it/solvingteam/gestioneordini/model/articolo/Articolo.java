@@ -39,6 +39,12 @@ public class Articolo {
 	@JoinTable(name = "articolo_categoria", joinColumns = @JoinColumn(name = "articolo_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "categoria_id", referencedColumnName = "ID"))
 	private Set<Categoria> categorie = new HashSet<>(0);
 	
+	public Articolo() {}
+	
+	public Articolo(String descrizione , Double prezzo) {
+		this.descrizione = descrizione;
+		this.prezzo = prezzo;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -69,6 +75,25 @@ public class Articolo {
 	public void setRuoli(Set<Categoria> categorie) {
 		this.categorie = categorie;
 	}
+	
+	@Override
+	public String toString() {
+		return "Articolo [id=" + id + ", descrizione=" + descrizione+ ", prezzo=" + prezzo + ", categorie:" + categorie.size() + "]";
+	}
+	
+	//non serve!! perchè possiamo creare piu articoli con lo stesso nome e quant'altro!!
+	@Override 
+	public boolean equals(Object object) {
+		if(object instanceof Articolo ) {
+		  Articolo articolo = (Articolo) object;
+			return descrizione.equals(articolo.getDescrizione());
+			
+		}
+		else {
+			return this.equals(object);
+		}
+	}
+
 	
 	
 }
